@@ -46,11 +46,15 @@ export class CodexGeneratedMediaProjection {
   }
 
   list() {
-    return [...this.itemIds].map((itemId) => ({
-      itemId,
-      ...this.mediaByItemId.get(itemId),
-      discarded: this.discardedItemIds.has(itemId),
-    }));
+    return [...this.itemIds].map((itemId) => {
+      const media = this.mediaByItemId.get(itemId);
+      return {
+        itemId,
+        mediaUrl: media?.mediaUrl,
+        savedPath: media?.savedPath,
+        discarded: this.discardedItemIds.has(itemId),
+      };
+    });
   }
 
   discard(itemIds: string[]): void {
